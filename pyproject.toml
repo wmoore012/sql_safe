@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "sql-safe"
+version = "0.1.0"
+description = "Production-ready SQL safety wrapper preventing injection attacks with 125K+ queries/sec performance"
+authors = ["J Smash <you@example.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+packages = [{ include = "sql_safe", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlalchemy = "^2.0.30"
+pymysql = "^1.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+pytest-cov = "^4.0.0"
+black = "^24.4.2"
+isort = "^5.13.2"
+ruff = "^0.4.7"
+mypy = "^1.10.0"
+pre-commit = "^3.7.1"
+bandit = "^1.7.0"
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+strict = true
+packages = ["sql_safe"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
