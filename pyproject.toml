@@ -9,7 +9,7 @@ packages = [{ include = "sql_safe", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-sqlalchemy = "^2.0.30"
+sqlalchemy = "^2.0.43"
 pymysql = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
