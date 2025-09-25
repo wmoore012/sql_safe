@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 MusicScope
+
 """
 Safe SQL query execution with injection prevention and performance monitoring.
 

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 MusicScope
+
 """
 Tests for safe_query module.
 

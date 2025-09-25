@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 MusicScope
+
 import sys
 from pathlib import Path
 from typing import Iterable, List

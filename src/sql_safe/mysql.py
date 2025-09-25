@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 MusicScope
+
 from __future__ import annotations
 
 from typing import Any

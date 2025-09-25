@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 MusicScope
+
 from sql_safe import mysql_with_timeout
 from sqlalchemy import text
 
