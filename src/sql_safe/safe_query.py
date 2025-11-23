@@ -56,9 +56,7 @@ def latency_warn(ms: int = 500) -> Callable[[Callable[..., Any]], Callable[..., 
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
 
                 if elapsed_ms > ms:
-                    logger.warning(
-                        f"🐢 Slow query detected: {elapsed_ms:.1f}ms (threshold: {ms}ms)"
-                    )
+                    logger.warning(f"🐢 Slow query detected: {elapsed_ms:.1f}ms (threshold: {ms}ms)")
                 else:
                     logger.debug(f"Query completed in {elapsed_ms:.1f}ms")
 
