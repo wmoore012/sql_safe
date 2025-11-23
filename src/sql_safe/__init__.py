@@ -22,22 +22,22 @@ from .validation import (
 )
 
 __all__ = [
-    "mysql_with_timeout", 
-    "query", 
-    "read_only_query", 
+    "mysql_with_timeout",
+    "query",
+    "read_only_query",
     "get_engine",
     # Exceptions
     "SqlSafeError",
     "ValidationError",
     "ConfigurationError",
-    "ResourceError", 
+    "ResourceError",
     "OperationError",
     "DatabaseConnectionError",
     "QueryExecutionError",
     "QueryTimeoutError",
     # Validation
     "validate_not_none",
-    "validate_string", 
+    "validate_string",
     "validate_number",
     "validate_path",
     "validate_dict",
