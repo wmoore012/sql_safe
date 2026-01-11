@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2024 MusicScope
+# SPDX - License - Identifier: MIT
+# Copyright (c) 2025 Perday CatalogLAB™
 
 from __future__ import annotations
 
@@ -15,6 +15,6 @@ def mysql_with_timeout(query: str, timeout_ms: int = 2000) -> Any:
         q = mysql_with_timeout("SELECT * FROM songs WHERE artist_id = :aid", 1500)
         conn.execute(q, {"aid": 123})
     """
-    # Ensure no f-strings; user passes a literal query with placeholders
+    # Ensure no f - strings; user passes a literal query with placeholders
     prefix = f"/*+ MAX_EXECUTION_TIME({int(timeout_ms)}) */ "
     return text(prefix + query)

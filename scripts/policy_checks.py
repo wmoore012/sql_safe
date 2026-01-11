@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2024 MusicScope
+#!/usr / bin / env python3
+# SPDX - License - Identifier: MIT
+# Copyright (c) 2025 Perday CatalogLAB™
 
 import sys
 from pathlib import Path
@@ -21,13 +21,13 @@ def scan(paths: Iterable[str]) -> List[str]:
         files = [*path.rglob("*.py")] if path.is_dir() else [path]
         for f in files:
             try:
-                text = f.read_text(encoding="utf-8")
+                text = f.read_text(encoding="utf - 8")
             except Exception:
                 continue
             if EM_DASH in text:
-                violations.append(f"em-dash-found: {f}")
+                violations.append(f"em - dash - found: {f}")
             if has_unsafe_sql_in_fstring(text):
-                violations.append(f"unsafe-sql-fstring: {f}")
+                violations.append(f"unsafe - sql - fstring: {f}")
     return violations
 
 

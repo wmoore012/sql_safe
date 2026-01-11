@@ -1,8 +1,8 @@
-# SPDX-License-Identifier: MIT
-# Copyright (c) 2024 MusicScope
+# SPDX - License - Identifier: MIT
+# Copyright (c) 2025 Perday CatalogLAB™
 
 """
-Custom exceptions for icat-sql-safe module.
+Custom exceptions for icat - sql - safe module.
 
 This module provides comprehensive error handling with specific exception types
 for different failure scenarios, enabling precise error handling and debugging.
@@ -10,23 +10,20 @@ for different failure scenarios, enabling precise error handling and debugging.
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 class IcatSqlSafeError(Exception):
-    """Base exception for all icat-sql-safe errors."""
-    
+    """Base exception for all icat - sql - safe errors."""
+
     def __init__(
-        self, 
-        message: str, 
-        details: Optional[Dict[str, Any]] = None,
-        suggestion: Optional[str] = None
+        self, message: str, details: dict[str, Any] | None = None, suggestion: str | None = None
     ) -> None:
         """
         Initialize the exception with detailed error information.
-        
+
         Args:
-            message: Human-readable error message
+            message: Human - readable error message
             details: Additional error context and debugging information
             suggestion: Suggested solution or next steps
         """
@@ -34,34 +31,30 @@ class IcatSqlSafeError(Exception):
         self.message = message
         self.details = details or {}
         self.suggestion = suggestion
-    
+
     def __str__(self) -> str:
         """Return formatted error message with details and suggestions."""
         result = self.message
-        
+
         if self.details:
             details_str = ", ".join(f"{k}={v}" for k, v in self.details.items())
             result += f" (Details: {details_str})"
-        
+
         if self.suggestion:
             result += f" Suggestion: {self.suggestion}"
-        
+
         return result
 
 
 class ValidationError(IcatSqlSafeError):
     """Raised when input validation fails."""
-    
+
     def __init__(
-        self, 
-        field: str, 
-        value: Any, 
-        expected: str,
-        suggestion: Optional[str] = None
+        self, field: str, value: Any, expected: str, suggestion: str | None = None
     ) -> None:
         """
-        Initialize validation error with field-specific information.
-        
+        Initialize validation error with field - specific information.
+
         Args:
             field: Name of the field that failed validation
             value: The invalid value that was provided
@@ -78,16 +71,11 @@ class ValidationError(IcatSqlSafeError):
 
 class ConfigurationError(IcatSqlSafeError):
     """Raised when configuration is invalid or missing."""
-    
-    def __init__(
-        self, 
-        config_key: str, 
-        issue: str,
-        suggestion: Optional[str] = None
-    ) -> None:
+
+    def __init__(self, config_key: str, issue: str, suggestion: str | None = None) -> None:
         """
         Initialize configuration error.
-        
+
         Args:
             config_key: The configuration key that has an issue
             issue: Description of the configuration problem
@@ -102,17 +90,17 @@ class ConfigurationError(IcatSqlSafeError):
 
 class ResourceError(IcatSqlSafeError):
     """Raised when system resources are unavailable or exhausted."""
-    
+
     def __init__(
-        self, 
-        resource: str, 
+        self,
+        resource: str,
         issue: str,
-        current_usage: Optional[str] = None,
-        suggestion: Optional[str] = None
+        current_usage: str | None = None,
+        suggestion: str | None = None,
     ) -> None:
         """
         Initialize resource error.
-        
+
         Args:
             resource: The resource that is unavailable (memory, disk, network, etc.)
             issue: Description of the resource problem
@@ -131,17 +119,17 @@ class ResourceError(IcatSqlSafeError):
 
 class OperationError(IcatSqlSafeError):
     """Raised when an operation fails due to business logic or external factors."""
-    
+
     def __init__(
-        self, 
-        operation: str, 
+        self,
+        operation: str,
         reason: str,
         retry_possible: bool = False,
-        suggestion: Optional[str] = None
+        suggestion: str | None = None,
     ) -> None:
         """
         Initialize operation error.
-        
+
         Args:
             operation: The operation that failed
             reason: Why the operation failed
@@ -158,18 +146,19 @@ class OperationError(IcatSqlSafeError):
 
 class DatabaseConnectionError(ResourceError):
     """Raised when database connection fails."""
-    
+
     def __init__(
-        self, 
-        database_url: str,
-        original_error: Optional[str] = None,
-        suggestion: Optional[str] = None
+        self, database_url: str, original_error: str | None = None, suggestion: str | None = None
     ) -> None:
-        issue = f"Failed to connect to database: {original_error}" if original_error else "Connection failed"
+        issue = (
+            f"Failed to connect to database: {original_error}"
+            if original_error
+            else "Connection failed"
+        )
         super().__init__(
-            "database_connection", 
-            issue, 
-            suggestion=suggestion or "Check database URL, credentials, and network connectivity"
+            "database_connection",
+            issue,
+            suggestion=suggestion or "Check database URL, credentials, and network connectivity",
         )
         self.database_url = database_url
         self.original_error = original_error
@@ -177,17 +166,12 @@ class DatabaseConnectionError(ResourceError):
 
 class QueryExecutionError(OperationError):
     """Raised when SQL query execution fails."""
-    
-    def __init__(
-        self, 
-        query: str,
-        error_message: str,
-        suggestion: Optional[str] = None
-    ) -> None:
+
+    def __init__(self, query: str, error_message: str, suggestion: str | None = None) -> None:
         super().__init__(
-            "query_execution", 
+            "query_execution",
             f"Query failed: {error_message}",
-            suggestion=suggestion or "Check query syntax and database permissions"
+            suggestion=suggestion or "Check query syntax and database permissions",
         )
         self.query = query
         self.error_message = error_message
@@ -195,17 +179,12 @@ class QueryExecutionError(OperationError):
 
 class QueryTimeoutError(TimeoutError):
     """Raised when SQL query times out."""
-    
-    def __init__(
-        self, 
-        query: str,
-        timeout_ms: int,
-        suggestion: Optional[str] = None
-    ) -> None:
+
+    def __init__(self, query: str, timeout_ms: int, suggestion: str | None = None) -> None:
         super().__init__(
-            timeout_ms / 1000, 
+            timeout_ms / 1000,
             "query_execution",
-            suggestion or "Try optimizing the query or increasing timeout_ms"
+            suggestion or "Try optimizing the query or increasing timeout_ms",
         )
         self.query = query
         self.timeout_ms = timeout_ms

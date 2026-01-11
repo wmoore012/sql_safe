@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: MIT
-Copyright (c) 2024 MusicScope -->
+Copyright (c) 2025 Perday CatalogLAB™ -->
 
 # Professional Docstring Templates
 
