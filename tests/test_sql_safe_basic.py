@@ -1,10 +1,10 @@
 import unittest
 
 from sql_safe.safe_query import (
-    _validate_query_safety,
-    SQLSafetyError,
     ReadOnlyViolationError,
+    SQLSafetyError,
     _requires_parameters_raw,
+    _validate_query_safety,
 )
 
 
