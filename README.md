@@ -64,8 +64,6 @@ See [BENCHMARKS.md](BENCHMARKS.md) for detailed results.
 
 ## Documentation
 
-- [API Documentation](docs/)
-- [Examples](examples/)
 - [Contributing Guide](CONTRIBUTING.md)
 - [Security Policy](SECURITY.md)
 
