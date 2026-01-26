@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/sql_safe/__init__.py
+src/sql_safe/exceptions.py
+src/sql_safe/mysql.py
+src/sql_safe/py.typed
+src/sql_safe/safe_query.py
+src/sql_safe/validation.py
+src/sql_safe.egg-info/PKG-INFO
+src/sql_safe.egg-info/SOURCES.txt
+src/sql_safe.egg-info/dependency_links.txt
+src/sql_safe.egg-info/requires.txt
+src/sql_safe.egg-info/top_level.txt
+tests/test_sql_safe_basic.py

@@ -330,7 +330,6 @@ def _validate_query_safety(query_str: str, read_only: bool = False) -> None:
             "Query contains literal quotes without parameters; use named bind parameters (:name)."
         )
 
-
 def _retry_with_backoff(
     func: Callable[..., Any], max_retries: int = 3, base_delay: float = 0.1
 ) -> Any:
@@ -375,6 +374,7 @@ def _retry_with_backoff(
     raise RuntimeError("Function failed without exception")
 
 
+
 # Heuristic: when SQL likely needs parameters (filters/mutations/comparisons)
 def _requires_parameters_raw(sql: str) -> bool:
     upper = sql.upper()
@@ -382,7 +382,6 @@ def _requires_parameters_raw(sql: str) -> bool:
         re.search(r"\b(WHERE|HAVING|VALUES|SET|IN\s*\(|LIKE|BETWEEN|LIMIT|OFFSET)\b", upper)
         or re.search(r"[<>!=]=|\s=\s", upper)
     )
-
 
 @latency_warn(500)  # Warn for queries taking longer than 500ms
 def query(
@@ -418,6 +417,7 @@ def query(
         raise ValueError("Query string cannot be empty")
 
     params = params or {}
+
 
     # Require parameters when SQL contains filters/comparisons
     if _requires_parameters_raw(query_str) and (not params or not re.search(r":\w+", query_str)):
@@ -487,6 +487,7 @@ def read_only_query(
         raise ValueError("Query string cannot be empty")
 
     params = params or {}
+
 
     # Require parameters when SQL contains filters/comparisons
     if _requires_parameters_raw(query_str) and (not params or not re.search(r":\w+", query_str)):
@@ -565,10 +566,9 @@ def bulk_query(
                 query_str = query_dict["query"]
                 params = query_dict.get("params", {})
 
+
                 # Require parameters when SQL contains filters/comparisons
-                if _requires_parameters_raw(query_str) and (
-                    not params or not re.search(r":\w+", query_str)
-                ):
+                if _requires_parameters_raw(query_str) and (not params or not re.search(r":\w+", query_str)):
                     raise SQLSafetyError(
                         "Parameters required for filtered queries; use named bind parameters (:name) and provide params."
                     )

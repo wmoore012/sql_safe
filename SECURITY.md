@@ -8,7 +8,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please report it by emailing security@musicscope.dev.
+If you discover a security vulnerability, please report it by emailing security@perdaylabs.com.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 

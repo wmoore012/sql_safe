@@ -33,7 +33,10 @@ def validate_not_none(value: Any, field_name: str) -> Any:
     """
     if value is None:
         raise ValidationError(
-            field_name, value, "non - None value", f"Provide a valid {field_name} value"
+            field_name,
+            value,
+            "non - None value",
+            f"Provide a valid {field_name} value"
         )
     return value
 
@@ -43,7 +46,7 @@ def validate_string(
     field_name: str,
     min_length: int = 1,
     max_length: int | None = None,
-    pattern: str | None = None,
+    pattern: str | None = None
 ) -> str:
     """
     Validate that a value is a string with optional constraints.
@@ -63,7 +66,10 @@ def validate_string(
     """
     if not isinstance(value, str):
         raise ValidationError(
-            field_name, value, "string", f"Convert {field_name} to string or provide string input"
+            field_name,
+            value,
+            "string",
+            f"Convert {field_name} to string or provide string input"
         )
 
     if len(value) < min_length:
@@ -71,7 +77,7 @@ def validate_string(
             field_name,
             value,
             f"string with at least {min_length} characters",
-            f"Provide a longer {field_name} (current: {len(value)} chars)",
+            f"Provide a longer {field_name} (current: {len(value)} chars)"
         )
 
     if max_length and len(value) > max_length:
@@ -79,7 +85,7 @@ def validate_string(
             field_name,
             value,
             f"string with at most {max_length} characters",
-            f"Shorten {field_name} (current: {len(value)} chars, max: {max_length})",
+            f"Shorten {field_name} (current: {len(value)} chars, max: {max_length})"
         )
 
     if pattern and not re.match(pattern, value):
@@ -87,7 +93,7 @@ def validate_string(
             field_name,
             value,
             f"string matching pattern '{pattern}'",
-            f"Ensure {field_name} follows the required format",
+            f"Ensure {field_name} follows the required format"
         )
 
     return value
@@ -99,7 +105,7 @@ def validate_number(
     min_value: int | float | None = None,
     max_value: int | float | None = None,
     allow_zero: bool = True,
-    number_type: type = float,
+    number_type: type = float
 ) -> int | float:
     """
     Validate that a value is a number with optional constraints.
@@ -125,12 +131,15 @@ def validate_number(
             field_name,
             value,
             f"{number_type.__name__}",
-            f"Provide a valid numeric value for {field_name}",
+            f"Provide a valid numeric value for {field_name}"
         )
 
     if not allow_zero and validated_value == 0:
         raise ValidationError(
-            field_name, value, "non - zero number", f"Provide a non - zero value for {field_name}"
+            field_name,
+            value,
+            "non - zero number",
+            f"Provide a non - zero value for {field_name}"
         )
 
     if min_value is not None and validated_value < min_value:
@@ -138,7 +147,7 @@ def validate_number(
             field_name,
             value,
             f"number >= {min_value}",
-            f"Increase {field_name} to at least {min_value}",
+            f"Increase {field_name} to at least {min_value}"
         )
 
     if max_value is not None and validated_value > max_value:
@@ -146,7 +155,7 @@ def validate_number(
             field_name,
             value,
             f"number <= {max_value}",
-            f"Reduce {field_name} to at most {max_value}",
+            f"Reduce {field_name} to at most {max_value}"
         )
 
     return validated_value
@@ -171,12 +180,18 @@ def validate_path(value: Any, field_name: str, must_exist: bool = False) -> Path
         path = Path(value)
     except (TypeError, ValueError):
         raise ValidationError(
-            field_name, value, "valid file path", f"Provide a valid path string for {field_name}"
+            field_name,
+            value,
+            "valid file path",
+            f"Provide a valid path string for {field_name}"
         )
 
     if must_exist and not path.exists():
         raise ValidationError(
-            field_name, value, "existing file path", f"Ensure the path exists: {path}"
+            field_name,
+            value,
+            "existing file path",
+            f"Ensure the path exists: {path}"
         )
 
     return path
@@ -186,7 +201,7 @@ def validate_dict(
     value: Any,
     field_name: str,
     required_keys: list[str] | None = None,
-    allowed_keys: list[str] | None = None,
+    allowed_keys: list[str] | None = None
 ) -> dict[str, Any]:
     """
     Validate that a value is a dictionary with optional key constraints.
@@ -205,7 +220,10 @@ def validate_dict(
     """
     if not isinstance(value, dict):
         raise ValidationError(
-            field_name, value, "dictionary", f"Provide a dictionary for {field_name}"
+            field_name,
+            value,
+            "dictionary",
+            f"Provide a dictionary for {field_name}"
         )
 
     if required_keys:
@@ -215,7 +233,7 @@ def validate_dict(
                 field_name,
                 value,
                 f"dictionary with keys: {required_keys}",
-                f"Add missing keys to {field_name}: {list(missing_keys)}",
+                f"Add missing keys to {field_name}: {list(missing_keys)}"
             )
 
     if allowed_keys:
@@ -225,7 +243,7 @@ def validate_dict(
                 field_name,
                 value,
                 f"dictionary with only allowed keys: {allowed_keys}",
-                f"Remove extra keys from {field_name}: {list(extra_keys)}",
+                f"Remove extra keys from {field_name}: {list(extra_keys)}"
             )
 
     return value

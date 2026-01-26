@@ -17,7 +17,10 @@ class IcatSqlSafeError(Exception):
     """Base exception for all icat - sql - safe errors."""
 
     def __init__(
-        self, message: str, details: dict[str, Any] | None = None, suggestion: str | None = None
+        self,
+        message: str,
+        details: dict[str, Any] | None = None,
+        suggestion: str | None = None
     ) -> None:
         """
         Initialize the exception with detailed error information.
@@ -50,7 +53,11 @@ class ValidationError(IcatSqlSafeError):
     """Raised when input validation fails."""
 
     def __init__(
-        self, field: str, value: Any, expected: str, suggestion: str | None = None
+        self,
+        field: str,
+        value: Any,
+        expected: str,
+        suggestion: str | None = None
     ) -> None:
         """
         Initialize validation error with field - specific information.
@@ -72,7 +79,12 @@ class ValidationError(IcatSqlSafeError):
 class ConfigurationError(IcatSqlSafeError):
     """Raised when configuration is invalid or missing."""
 
-    def __init__(self, config_key: str, issue: str, suggestion: str | None = None) -> None:
+    def __init__(
+        self,
+        config_key: str,
+        issue: str,
+        suggestion: str | None = None
+    ) -> None:
         """
         Initialize configuration error.
 
@@ -96,7 +108,7 @@ class ResourceError(IcatSqlSafeError):
         resource: str,
         issue: str,
         current_usage: str | None = None,
-        suggestion: str | None = None,
+        suggestion: str | None = None
     ) -> None:
         """
         Initialize resource error.
@@ -125,7 +137,7 @@ class OperationError(IcatSqlSafeError):
         operation: str,
         reason: str,
         retry_possible: bool = False,
-        suggestion: str | None = None,
+        suggestion: str | None = None
     ) -> None:
         """
         Initialize operation error.
@@ -148,17 +160,16 @@ class DatabaseConnectionError(ResourceError):
     """Raised when database connection fails."""
 
     def __init__(
-        self, database_url: str, original_error: str | None = None, suggestion: str | None = None
+        self,
+        database_url: str,
+        original_error: str | None = None,
+        suggestion: str | None = None
     ) -> None:
-        issue = (
-            f"Failed to connect to database: {original_error}"
-            if original_error
-            else "Connection failed"
-        )
+        issue = f"Failed to connect to database: {original_error}" if original_error else "Connection failed"
         super().__init__(
             "database_connection",
             issue,
-            suggestion=suggestion or "Check database URL, credentials, and network connectivity",
+            suggestion=suggestion or "Check database URL, credentials, and network connectivity"
         )
         self.database_url = database_url
         self.original_error = original_error
@@ -167,11 +178,16 @@ class DatabaseConnectionError(ResourceError):
 class QueryExecutionError(OperationError):
     """Raised when SQL query execution fails."""
 
-    def __init__(self, query: str, error_message: str, suggestion: str | None = None) -> None:
+    def __init__(
+        self,
+        query: str,
+        error_message: str,
+        suggestion: str | None = None
+    ) -> None:
         super().__init__(
             "query_execution",
             f"Query failed: {error_message}",
-            suggestion=suggestion or "Check query syntax and database permissions",
+            suggestion=suggestion or "Check query syntax and database permissions"
         )
         self.query = query
         self.error_message = error_message
@@ -180,11 +196,16 @@ class QueryExecutionError(OperationError):
 class QueryTimeoutError(TimeoutError):
     """Raised when SQL query times out."""
 
-    def __init__(self, query: str, timeout_ms: int, suggestion: str | None = None) -> None:
+    def __init__(
+        self,
+        query: str,
+        timeout_ms: int,
+        suggestion: str | None = None
+    ) -> None:
         super().__init__(
             timeout_ms / 1000,
             "query_execution",
-            suggestion or "Try optimizing the query or increasing timeout_ms",
+            suggestion or "Try optimizing the query or increasing timeout_ms"
         )
         self.query = query
         self.timeout_ms = timeout_ms
